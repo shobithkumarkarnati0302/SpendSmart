@@ -1,7 +1,6 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CircleDollarSign } from "lucide-react";
+import { CircleDollarSign, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +17,8 @@ import {
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/context/AuthContext";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -81,144 +82,229 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md">
-        <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary">
-            <CircleDollarSign className="h-6 w-6 text-primary-foreground" />
-          </div>
-          <h1 className="mb-2 text-2xl font-bold">Spend-Smart</h1>
-          <p className="text-muted-foreground">Manage your finances with ease</p>
-        </div>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-background to-muted/50 p-4">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md"
+      >
+        <motion.div 
+          whileHover={{ scale: 1.02 }}
+          className="mb-8 text-center p-6 rounded-xl shadow-xl bg-[hsl(var(--primary))] border border-muted/20"
+        >
+          <motion.div 
+            initial={{ rotate: 0, scale: 0.8 }}
+            animate={{ rotate: 0, scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 10 }}
+            className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/80 shadow-md"
+          >
+            <CircleDollarSign className="h-8 w-8 text-white" />
+          </motion.div>
+          <motion.h1 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mb-2 text-3xl font-bold bg-gradient-to-r from-primary to-foreground bg-clip-text text-white"
+          >
+            Spend-Smart
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-white"
+          >
+            Manage your finances with ease
+          </motion.p>
+        </motion.div>
 
         <Tabs defaultValue="login" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-2 bg-card shadow-lg">
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="signup">Sign Up</TabsTrigger>
           </TabsList>
 
           <TabsContent value="login">
-            <Card>
-              <CardHeader>
-                <CardTitle>Login</CardTitle>
-                <CardDescription>
-                  Enter your credentials to access your account
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Form {...loginForm}>
-                  <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
-                    <FormField
-                      control={loginForm.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input placeholder="you@example.com" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={loginForm.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Password</FormLabel>
-                          <FormControl>
-                            <Input type="password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" className="w-full" disabled={isLoading}>
-                      {isLoading ? "Signing in..." : "Sign In"}
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="border-muted/20 shadow-xl">
+                <CardHeader>
+                  <CardTitle className="text-2xl">Welcome back</CardTitle>
+                  <CardDescription>
+                    Enter your credentials to access your account
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Form {...loginForm}>
+                    <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
+                      <FormField
+                        control={loginForm.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="you@example.com" 
+                                {...field} 
+                                className="focus-visible:ring-primary/50"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={loginForm.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                              <Input 
+                                type="password" 
+                                {...field} 
+                                className="focus-visible:ring-primary/50"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <motion.div whileTap={{ scale: 0.98 }}>
+                        <Button 
+                          type="submit" 
+                          className="w-full mt-6" 
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Signing in...
+                            </>
+                          ) : "Sign In"}
+                        </Button>
+                      </motion.div>
+                    </form>
+                  </Form>
+                </CardContent>
+              </Card>
+            </motion.div>
           </TabsContent>
 
           <TabsContent value="signup">
-            <Card>
-              <CardHeader>
-                <CardTitle>Create an account</CardTitle>
-                <CardDescription>
-                  Enter your information to create a new account
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Form {...signupForm}>
-                  <form onSubmit={signupForm.handleSubmit(onSignupSubmit)} className="space-y-4">
-                    <FormField
-                      control={signupForm.control}
-                      name="fullName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Full Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="John Doe" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={signupForm.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input placeholder="you@example.com" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={signupForm.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Password</FormLabel>
-                          <FormControl>
-                            <Input type="password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={signupForm.control}
-                      name="passwordConfirm"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Confirm Password</FormLabel>
-                          <FormControl>
-                            <Input type="password" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button type="submit" className="w-full" disabled={isLoading}>
-                      {isLoading ? "Creating account..." : "Create Account"}
-                    </Button>
-                  </form>
-                </Form>
-              </CardContent>
-              <CardFooter className="text-sm text-center text-muted-foreground">
-                By creating an account, you agree to our Terms of Service and Privacy Policy
-              </CardFooter>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="border-muted/20 shadow-xl">
+                <CardHeader>
+                  <CardTitle className="text-2xl">Create an account</CardTitle>
+                  <CardDescription>
+                    Enter your information to get started
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Form {...signupForm}>
+                    <form onSubmit={signupForm.handleSubmit(onSignupSubmit)} className="space-y-4">
+                      <FormField
+                        control={signupForm.control}
+                        name="fullName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Full Name</FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="John Doe" 
+                                {...field} 
+                                className="focus-visible:ring-primary/50"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={signupForm.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="you@example.com" 
+                                {...field} 
+                                className="focus-visible:ring-primary/50"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={signupForm.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                              <Input 
+                                type="password" 
+                                {...field} 
+                                className="focus-visible:ring-primary/50"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={signupForm.control}
+                        name="passwordConfirm"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Confirm Password</FormLabel>
+                            <FormControl>
+                              <Input 
+                                type="password" 
+                                {...field} 
+                                className="focus-visible:ring-primary/50"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <motion.div whileTap={{ scale: 0.98 }}>
+                        <Button 
+                          type="submit" 
+                          className="w-full mt-6" 
+                          disabled={isLoading}
+                        >
+                          {isLoading ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Creating account...
+                            </>
+                          ) : "Create Account"}
+                        </Button>
+                      </motion.div>
+                    </form>
+                  </Form>
+                </CardContent>
+                <CardFooter className="text-sm text-center text-muted-foreground">
+                  By creating an account, you agree to our Terms of Service and Privacy Policy
+                </CardFooter>
+              </Card>
+            </motion.div>
           </TabsContent>
         </Tabs>
-      </div>
+      </motion.div>
     </div>
   );
 };

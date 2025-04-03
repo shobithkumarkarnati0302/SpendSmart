@@ -139,7 +139,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, toggle }) => {
       )}
     >
       <div className="flex items-center gap-3 p-6 border-b border-sidebar-border">
-        <CircleDollarSign size={26} className="text-primary" />
+        <CircleDollarSign size={30} className="text-primary" />
         {!collapsed && (
           <span className="font-bold text-xl whitespace-nowrap">Spend Smart</span>
         )}
@@ -151,7 +151,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, toggle }) => {
             key={item.path}
             to={item.path}
             className={cn(
-              "flex items-center gap-3 p-3 rounded-md transition-colors",
+              "flex items-center gap-3 p-3 mt-5 rounded-md transition-colors",
               location.pathname === item.path
                 ? "bg-sidebar-accent text-sidebar-primary"
                 : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
@@ -182,7 +182,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, toggle }) => {
         
         <Button 
           variant="outline" 
-          className="w-full flex items-center justify-center gap-2"
+          className="w-full flex items-center justify-center gap-2 text-black"
           onClick={signOut}
         >
           <LogOut className="h-4 w-4" />
@@ -193,13 +193,13 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, toggle }) => {
 
       <button
         onClick={toggle}
-        className="absolute top-5 -right-3 w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-md hover:bg-primary/90 transition-all"
+        className="absolute top-5 -right-3 w-7 h-7 rounded-full bg-primary flex items-center justify-center shadow-md hover:bg-primary/90 transition-all"
       >
         {collapsed ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -214,8 +214,8 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, toggle }) => {
         ) : (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="14"
-            height="14"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

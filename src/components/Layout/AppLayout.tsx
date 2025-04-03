@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import { Menu } from "lucide-react";
@@ -33,23 +32,24 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
   return (
     <div className="flex min-h-screen bg-background">
+      {/* Sidebar Container */}
       <div
         className={cn(
-          "fixed top-0 left-0 z-30 h-screen transition-all duration-300 ease-in-out lg:sticky",
-          sidebarCollapsed && !isMobile ? "w-[80px]" : "w-[250px]",
+          "fixed top-0 left-0 z-30 h-screen transition-all duration-300 ease-in-out",
+          sidebarCollapsed && !isMobile ? "w-[70px]" : "w-[250px]",
           isMobile ? (sidebarVisible ? "translate-x-0" : "-translate-x-full") : "translate-x-0"
         )}
       >
-        <Sidebar 
-          collapsed={sidebarCollapsed} 
-          toggle={toggleSidebar} 
-        />
+        <Sidebar collapsed={sidebarCollapsed} toggle={toggleSidebar} />
       </div>
-      
-      <div className={cn(
-        "flex flex-col flex-1 w-full transition-all duration-300",
-        !isMobile && (sidebarCollapsed ? "lg:pl-[80px]" : "lg:pl-[250px]"),
-      )}>
+
+      {/* Main Content Container */}
+      <div
+        className={cn(
+          "flex flex-col flex-1 w-full transition-all duration-300",
+          !isMobile && (sidebarCollapsed ? "lg:ml-[102px]" : "lg:ml-[282px]") // Increased to 32px gap
+        )}
+      >
         {isMobile && (
           <div className="sticky top-0 z-20 flex items-center h-16 px-4 border-b bg-background">
             <Button variant="ghost" size="icon" onClick={toggleSidebar} className="lg:hidden">
@@ -58,7 +58,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             <div className="ml-4 text-lg font-semibold">Spend Smart</div>
           </div>
         )}
-        <main className="flex-1 p-4 md:p-6">
+        <main className="flex-1 p-4 md:p-6 lg:p-6">
           {children}
         </main>
         <Footer />
